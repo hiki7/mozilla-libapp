@@ -2,11 +2,17 @@ from django.contrib import admin
 from .models import Book, BookInstance, Genre, Author, Language
 
 
+class BookInline(admin.TabularInline):
+    model = Book
+
+
 class AuthorAdmin(admin.ModelAdmin):
     #list_display is used for displaying the info in general page
     list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
     #fields is used for displaying the attributes in the form, in which order. Usually, they are displayed vertically, but if we use tuple, we can display horizontally
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
+
+    inlines = [BookInline]
 
 
 class BookInstanceInline(admin.TabularInline):
@@ -22,7 +28,7 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'due_back')
+    list_display = ('book', 'status', 'due_back', 'id')
     list_filter = ('status', 'due_back')
 
     #diving into the sections, first value in the tuple is the Title of the sections
