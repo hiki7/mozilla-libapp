@@ -19,6 +19,12 @@ class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'status', 'due_back')
     list_filter = ('status', 'due_back')
 
+    #diving into the sections, first value in the tuple is the Title of the sections
+    fieldsets = (
+        (None, {'fields': ('book', 'imprint', 'id')}),
+        ('Availability', {'fields': ('status', 'due_back')}),
+    )
+
 # admin.site.register(Book)
 # admin.site.register(BookInstance)
 admin.site.register(Genre)
