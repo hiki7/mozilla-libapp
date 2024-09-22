@@ -46,6 +46,8 @@ class Book(models.Model):
                                       '">ISBN number</a>')
 
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True,
+                                 help_text="Select the language of the book")
 
     def __str__(self):
         """String for representing the Model object."""
@@ -104,3 +106,13 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
+
+
+class Language(models.Model):
+    """Model representing a language (e.g., English, Farsi)."""
+    name = models.CharField(max_length=100, unique=True,
+                            help_text="Enter the book's language (e.g., English, Farsi)")
+
+    def __str__(self):
+        """String for representing the Language object."""
+        return self.name
