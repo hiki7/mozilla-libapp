@@ -10,11 +10,17 @@ def index(request):
 
     num_authors = Author.objects.count()
 
+    num_languages = Language.objects.count()
+
+    num_genres = Genre.objects.filter(name__istartswith='f').count()
+
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
+        'num_languages': num_languages,
+        'num_genres': num_genres,
     }
 
     return render(request, 'index.html', context=context)
