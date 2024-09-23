@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+from django.conf import settings
 
 import uuid
 
@@ -71,6 +72,8 @@ class BookInstance(models.Model):
     book = models.ForeignKey('Book', on_delete=models.RESTRICT, null=True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
+    borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                 null=True, blank=True)
 
     LOAN_STATUS = (
         ('m', 'Maintenance'),
