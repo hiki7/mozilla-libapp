@@ -6,6 +6,7 @@ from django.db.models.functions import Lower
 from django.conf import settings
 
 import uuid
+from datetime import date
 
 
 class Genre(models.Model):
@@ -89,6 +90,12 @@ class BookInstance(models.Model):
         default='m',
         help_text='Book availability status',
     )
+
+    @property #property allows the method to be accessed like an attribute rather than calling is as a method
+    def is_overdue(self):
+        """Determines if the book is overdue based on due date and current date."""
+        return bool(self.due_back and date.today() > self.due_back) #firstly we check if due_back attribute is not empty,
+        # meaning it set to some date. Then we check if today's date is more than due_back date
 
     class Meta:
         ordering = ['due_back']
